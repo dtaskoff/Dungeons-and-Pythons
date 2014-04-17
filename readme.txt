@@ -30,7 +30,7 @@ Current version:
 * enemies:
 - pythons: these are the easiest enemies. You don't get bonuses for
 beating them.
-- anacondas: these are the harder (hardest) one. The 'x' level has
+- anacondas: these are the harder (hardest) ones. The 'x' level has
 'x' anacondas on it. For every slained anaconda you get critical hit,
 health and damage bonuses.
 
