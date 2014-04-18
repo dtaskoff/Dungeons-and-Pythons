@@ -16,7 +16,11 @@
     My own implementation of the game Dungeons and Pythons, a project
 from the course Hack Bulgaria.
 The game can be started by running main.py (at least python3.3 needed!).
-All tests can be started by running run_all_tests.py
+*edit:
+- all tests can be run by entering 'py test.py' (or whatever your python command is)
+- test code coverage can be displayed by entering 'py test.py coverage'
+**you must have the pypi coverage module in order to do the latter, which
+can be downloaded from here: https://pypi.python.org/pypi/coverage/3.7.1
 
 Current version:
 * has three heroes with different difficulties. From easiest to hardest:
