@@ -1,5 +1,6 @@
 # the dungeon module
 import map_
+import ui
 import python, anaconda
 import fight
 import weapon, potion
@@ -128,15 +129,12 @@ class Dungeon():
     # if no more levels, returns false
     def level_up(self):
         if self.level >= self.max_level:
-            print("you won!")
+            ui.won()
             return False
 
         self.level += 1
-        print("nice, you got through this level")
-        print("now it's time for the next one!")
-        print("here be pythons..")
-        print("-" * 40)
-        self.map_ = map_.Map_("./maps/%s_map"%self.level)
+        ui.next_level()
+        self.map_ = map_.Map_("./maps/{}_map".format(self.level))
         self.hero.take_healing(potion.Potion(self.hero.max_health))
         self.spawn()
 
@@ -149,15 +147,11 @@ class Dungeon():
 
         if chance >= 50:
             weapon_ = self.get_weapon()
-            print("you found a %s"%weapon_)
-            answer = input("do you want to pick it?(y, n)")
-            if answer == 'y':
-                self.hero.equip_weapon(weapon_)
-                print("you got a new weapon!")
+            ui.pick_a_weapon(self.hero, weapon_)
         else:
             potion_ = self.get_potion()
             self.hero.take_healing(potion_)
-            print("you drank a potion!")
+            ui.drink_a_potion()
 
     # returns a random weapon from the set of weapons based on level
     # for level 1 - only the first one,

@@ -1,5 +1,4 @@
-import gameplay
-
+# The (Console) User Interface module
 
 def welcome_screen():
     print("welcome to dungeons and pythons v0.00!")
@@ -12,7 +11,7 @@ def pick_difficulty():
         picked_difficulty = 0
         print("you chose an invalid difficulty! demo mode started")
 
-    return gameplay.Gameplay(picked_difficulty)
+    return picked_difficulty
 
 def pick_a_hero(game):
     print(game.list_heroes())
@@ -23,6 +22,46 @@ def pick_a_hero(game):
         picked_hero = input("choose a hero: ")
 
     game.add_hero(picked_hero)
+
+def visualise_map(game):
+    print("\nmap:\n{}".format(game.vision()))
+
+def execute_command():
+    command = input()
+    command = command.split()
+    if len(command) == 0:
+        return
+    if command[0] == 'instructions':
+        print(game.instructions())
+    elif command[0] == 'status':
+        print(game.status())
+    elif command[0] == 'inventory':
+        print(game.inventory())
+    elif command[0] == 'move':
+        if len(command) > 1:
+             if not game.move(command[1]):
+                print("you cannot go there..")
+    elif command[0] == 'exit':
+        exit(0)
+
+def pick_a_weapon(hero, weapon):
+    print("you found a {}".format(weapon))
+    answer = input("do you want to pick it?(y, n)")
+    if answer == 'y':
+        hero.equip_weapon(weapon)
+        print("you got a new weapon!")
+
+def drink_a_potion():
+    print("you drank a potion!")
+
+def won():
+    print("you won!")
+
+def next_level():
+    print("nice, you got through this level")
+    print("now it's time for the next one!")
+    print("here be pythons..")
+    print("-" * 40)
 
 def stepped_on_an_anaconda():
     print('\n'.join(["you dared to wake up the anaconda!",
