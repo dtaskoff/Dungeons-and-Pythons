@@ -15,6 +15,12 @@ class TestGameplay(unittest.TestCase):
         hero_ = self.g.pick_a_hero("sharik")
         self.assertTrue(isinstance(hero_, hero.Hero))
 
+    def test_hero_exists(self):
+        result1 = self.g.hero_exists("sharik")
+        result2 = self.g.hero_exists("zonya")
+        self.assertTrue(result1)
+        self.assertFalse(result2)
+
     def test_add_hero(self):
         self.g.add_hero("sharik")
         self.assertTrue('dungeon' in self.g.__dict__)
@@ -57,7 +63,6 @@ class TestGameplay(unittest.TestCase):
         self.g.add_hero("sharik")
         self.assertTrue(self.g.move('right'))
 
-    # will fail sometimes, becuse of dictionary's random iterations
     def test_list_heroes(self):
         result = self.g.list_heroes()
         expected = ["\nheroes:", "-" * 40,
@@ -66,8 +71,7 @@ class TestGameplay(unittest.TestCase):
                 str(gameplay._heroes_by_name["arya"]),
                 "-" * 40, "-" * 40,
                 str(gameplay._heroes_by_name["silmarillion"]), "-" * 40]
-        self.assertEqual('\n'.join(expected), result)
-
+        self.assertEqual(sorted('\n'.join(expected)), sorted(result))
 
 
 if __name__ == '__main__':

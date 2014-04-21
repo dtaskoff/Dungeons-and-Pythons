@@ -41,6 +41,10 @@ class Gameplay():
             heroes.append("-" * 40)
         return '\n'.join(heroes)
 
+    # return true if a hero with name 'hero_name' exists
+    def hero_exists(self, hero_name):
+        return hero_name in _heroes_by_name
+
     # returns a string forming our hero's current vision
     # i.e. the fields that she can see from her own one
     def vision(self):

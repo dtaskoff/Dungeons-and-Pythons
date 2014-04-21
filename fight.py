@@ -3,6 +3,7 @@ from random import randint
 import hero
 import python, anaconda
 import weapon
+import ui
 
 
 # the bonuses we get for slaining anacondas!
@@ -37,19 +38,19 @@ class Fight():
     def init_fight(self):
         enemy = "python"
         if isinstance(self.enemy, anaconda.Anaconda):
-            print("you dared to wake up the anaconda!\nnow you're in trouble..\n")
+            ui.stepped_on_an_anaconda()
             enemy = "anaconda"
         else:
-            print("you stepped on a python!\n")
+            ui.stepped_on_a_python()
 
-        print("%s vs %s\n"%(self.hero.known_as(), enemy))
+        ui.init_fight(self.hero.known_as(), enemy)
 
     def status(self):
-        print("%s\n\n%s\n"%(self.hero, self.enemy))
+        ui.status(self.hero, self.enemy)
 
     # the sad one :/ (to see when playing)
     def game_over(self):
-        print("game over..")
+        ui.game_over()
         exit(0)
 
     # and the cool one
@@ -59,7 +60,7 @@ class Fight():
         if isinstance(self.enemy, anaconda.Anaconda):
             enemy = "anaconda"
 
-        print("good job\nyou've beaten the %s\n\n"%enemy)
+        ui.beaten_the(enemy)
 
     # information about every hit during the fight
     # (i.e. damage dealt and taken)
@@ -67,34 +68,30 @@ class Fight():
         hitter = "enemy"
         if isinstance(attacker, hero.Hero):
             hitter = "you"
-        print("%s dealt %d damage\n"%(hitter, damage))
+
+        ui.damage_dealt(hitter, damage)
 
     # calculates the bonuses we get for slaining an anaconda
     # (no bonuses for a python, a python is easy)
     def bonus(self):
-        print("you got bonus for beating the anaconda:")
-
         self.hero.max_health += int(self.hero.max_health * _health_bonus)
-        print("your max health is now %d"%self.hero.max_health)
-
         self.hero.damage += int(self.hero.damage * _damage_bonus)
-        print("your damage is now %d"%self.hero.damage)
-
         self.hero.health = self.hero.max_health
+
+        ui.hero_bonuses(self.hero.max_health, self.hero.damage)
 
         if 'weapon' in self.hero.__dict__:
             self.hero.weapon.damage +=\
                 int(self.hero.weapon.damage * _weapon_damage_bonus)
-            print("your weapon damage is now %d"
-                % self.hero.weapon.damage)
 
             self.hero.weapon.critical_strike_percent +=\
                 self.hero.weapon.critical_strike_percent *\
                     _weapon_critical_hit_chance_bonus
             if self.hero.weapon.critical_strike_percent > 1.0:
                 self.hero.weapon.critical_strike_percent = 1.0
-            print("your critical strike chance is now %d%%"
-                % (self.hero.weapon.critical_strike_percent * 100))
+
+            ui.weapon_bonuses(self.hero.weapon.damage,
+                self.hero.weapon.critical_strike_percent)
 
     # the whole thing is happening here:
     # (we get the winner as a result from the method,
@@ -112,7 +109,7 @@ class Fight():
             attacker, attacked = attacked, attacker
 
         if attacker == self.hero:
-            print("you have been eaten by a snake..")
+            ui.eaten_by_a_snake()
             self.game_over()
         elif isinstance(attacker, anaconda.Anaconda):
             self.won()
