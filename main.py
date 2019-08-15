@@ -14,7 +14,7 @@ def main():
 
     while game.in_game():
         ui.visualise_map(game)
-        ui.execute_command()
+        ui.execute_command(game)
 
 
 if __name__ == '__main__':

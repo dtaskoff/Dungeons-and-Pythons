@@ -26,7 +26,7 @@ def pick_a_hero(game):
 def visualise_map(game):
     print("\nmap:\n{}".format(game.vision()))
 
-def execute_command():
+def execute_command(game):
     command = input()
     command = command.split()
     if len(command) == 0:
